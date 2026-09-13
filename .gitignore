@@ -1,0 +1,17 @@
+# Node dependencies — opencode installs its plugin SDK under .opencode/node_modules/;
+# any JS you add would land here too. Safe to ignore everywhere.
+node_modules/
+
+# opencode runtime scaffolding — auto-generated when opencode runs in this repo
+# (declares @opencode-ai/plugin so local .opencode/plugin/* can import it).
+# opencode recreates these on next run; safe to ignore.
+.opencode/package.json
+.opencode/package-lock.json
+.opencode/bun.lock
+
+# KB query log — appended at runtime by the agent (SKILL.md Workflow 2), not source.
+.kb/query-log.jsonl
+
+# OS / editor cruft
+.DS_Store
+*.swp
