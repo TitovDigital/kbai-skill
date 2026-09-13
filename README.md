@@ -15,9 +15,28 @@ Symbolic inference runs using plain Node.js
 
 Editing is done using a skill. It follows the [Agent Skills](https://agentskills.io) standard and is compatible with opencode, Claude Code, and Codex.
 
+## Typical use on unstructured source data
+
+In this case, symbolic reasoning code is responsible for making a decision, whereas LLM handles extraction of simple facts from the source unstructured data (a source document). The loop runs until the engine has everything it needs:
+
+1. The agent reads `manifest.json`, picks the rule that answers your question, and extracts the facts it can see in the document.
+2. It runs the engine. If a fact is missing, the engine returns `FACT_NEEDED` with that fact's schema — never a guess.
+3. The agent goes back to the document for that specific fact (using the schema's type and description), adds it, and re-runs.
+4. Repeat until `COMPLETED`, then the agent answers with the reasoning tree attached.
+
+### Example
+
+In an opencode, Claude Code, or Codex session in this repo, ask:
+
+> Here's a contract: "Acme LLC and Beta Inc. agree to a 12-month non-compete. Signed by A. Smith for Acme and J. Doe for Beta." Is it valid?
+
+The agent extracts `contract.hasNonCompete`, `contract.signedByPartyA`, `contract.signedByPartyB` from the text, runs the inference, and answers with the reasoning tree — the same one the command-line example below prints. If a fact isn't in the document (e.g., one signature is missing), the engine stops at `FACT_NEEDED` for that fact and the agent says so rather than guessing.
+
+For a document on disk, point the agent at the file (attach it or give its path) and ask the same question. The full procedure — rule selection, fact extraction, the `FACT_NEEDED` feedback loop, type conversion — is Workflow 2 in `SKILL.md`.
+
 ## Editing the knowledge base with an agent
 
-The skill should be discovered automatically. To add or change rules, describe them in natural language; the agent translates your description to first-order logic, writes the rule file, updates `manifest.json` (question, condition, dependencies), and lints the schemas.
+To add or change rules, describe them in natural language; the agent translates your description to first-order logic, writes the rule file, updates `manifest.json` (question, condition, dependencies), and lints the schemas.
 
 Usage example in this repo:
 
@@ -29,9 +48,11 @@ Usage example in this repo:
 
 The agent updates the knowledge base with the additional rule.
 
-Then run the query example below to see how the updated tree executed.
+Re-run the query example to see how the updated tree executes.
 
-## Quick start
+## Use without an agent
+
+For structured facts, the same engine can be called programmatically without LLM or an agent:
 
 ```bash
 # 1. Query with a missing fact — the engine recurses into contract.isSignedByBothParties,
@@ -62,7 +83,7 @@ echo '{"fact":"contract.isValid","facts":{"contract.hasNonCompete":true,"contrac
 # ✓ inferred contract.isValid = true
 ```
 
-A `FACT_NEEDED` response is the engine refusing to guess — the orchestrating agent extracts the missing fact from the user's text and re-runs. See Workflow 2 in `SKILL.md` for the full loop.
+A `FACT_NEEDED` response is the engine refusing to guess — supply the missing fact and re-run, or have an agent extract it from your document (see the Quick start above).
 
 ## Knowledge base layout
 
@@ -76,7 +97,7 @@ A `FACT_NEEDED` response is the engine refusing to guess — the orchestrating a
 
 Override the KB directory with `--kb-dir <path>` on any script, or set it in `AGENTS.md`.
 
-## Writing a rule
+## Writing a rule manually
 
 Copy `templates/rule_template.mjs` into `.kb/rules/<subject.predicate>.mjs`. The default-exported function takes an `infer` callback and returns a value. Use only `infer` and standard JS — no external packages.
 
