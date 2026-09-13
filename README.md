@@ -23,11 +23,11 @@ Usage example in this repo:
 
 > Show me the knowledge base in this project
 
-... explanation of the existing rules in the knowledge base
+(Prints explanation of the existing rules in the knowledge base)
 
 > Add a rule: a contract is binding if it is valid and has been filed with the county.
 
-The agent creates `.kb/rules/contract.isBinding.mjs` (inferring `contract.isBinding` from `contract.isValid` — already a rule — and `contract.filedWithCounty`), updates `manifest.json`, and runs `lint_schemas.mjs`. Because `contract.isValid` is itself inferred, the new rule nests on the existing chain: `contract.isBinding` → `contract.isValid` → `contract.isSignedByBothParties` → party signatures.
+The agent updates the knowledge base with the additional rule.
 
 Then run the query example below to see how the updated tree executed.
 
