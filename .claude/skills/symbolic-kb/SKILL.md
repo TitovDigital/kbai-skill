@@ -1,6 +1,11 @@
 ---
 name: symbolic-kb
-description: Create, maintain, and query a deterministic knowledge base with symbolic reasoning. Rules are JavaScript functions executed by a forward-chaining inference engine locally via Node.js. The agent orchestrates a feedback loop between LLM fact extraction and deterministic rule evaluation, preventing hallucinations by refusing to guess when facts are ambiguous.
+description: >-
+  Create, maintain, and query a deterministic knowledge base with symbolic
+  reasoning. Rules are JavaScript functions executed by a forward-chaining
+  inference engine locally via Node.js. Use for questions that check specific
+  facts against discrete rules to reach an auditable verdict. Skip open-ended
+  advice, brainstorming, and questions without a pass/fail criterion.
 compatibility: opencode, claude-code, codex
 ---
 
@@ -320,5 +325,4 @@ When the user wants to test a specific rule with known facts:
    ```
 
 <!-- Copyright 2024-2026 Pavel Titov -->
-
 
