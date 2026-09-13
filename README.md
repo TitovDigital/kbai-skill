@@ -32,7 +32,7 @@ In an opencode, Claude Code, or Codex session in this repo, ask:
 
 The agent extracts `contract.hasNonCompete`, `contract.signedByPartyA`, `contract.signedByPartyB` from the text, runs the inference, and answers with the reasoning tree — the same one the command-line example below prints. If a fact isn't in the document (e.g., one signature is missing), the engine stops at `FACT_NEEDED` for that fact and the agent says so rather than guessing.
 
-For a document on disk, point the agent at the file (attach it or give its path) and ask the same question. The full procedure — rule selection, fact extraction, the `FACT_NEEDED` feedback loop, type conversion — is Workflow 2 in `SKILL.md`.
+For a document on disk, point the agent at the file (attach it or give its path) and ask the same question.
 
 ## Editing the knowledge base with an agent
 
