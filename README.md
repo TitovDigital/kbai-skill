@@ -55,7 +55,7 @@ Re-run the query example to see how the updated tree executes.
 
 ## Use without an agent
 
-For structured facts, the same engine can be called programmatically without LLM or an agent:
+For structured inputs, the same engine can be called programmatically without an LLM or an agent:
 
 ```bash
 # 1. Query with a missing fact — the engine recurses into contract.isSignedByBothParties,
