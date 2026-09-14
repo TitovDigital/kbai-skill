@@ -2,18 +2,7 @@
 
 A self-contained template for building a **deterministic knowledge base** with symbolic reasoning, designed to run as an [Agent Skills](https://agentskills.io) standard skill (opencode, Claude Code, Codex). Rules are JavaScript functions executed by a forward-chaining inference engine locally with Node.js — no LLM is used at inference time. The agent orchestrates a feedback loop between LLM fact extraction and deterministic rule evaluation, refusing to guess when facts are ambiguous.
 
-This repo is both a starter template (clone it, edit `.kb/`, ship) and the home of the `symbolic-kb` skill in `.claude/skills/symbolic-kb/`.
-
-## What's in the box
-
-- `.claude/skills/symbolic-kb/` — the skill: `SKILL.md` (full workflow reference), `inference.mjs` (engine), `scripts/` (load, run, lint, tree), `templates/rule_template.mjs`
-- `.kb/` — example knowledge base: a `Contract Validity Checker` with two nested rules (`contract.isValid` → `contract.isSignedByBothParties`)
-
-## Compatibility
-
-Symbolic inference runs using plain Node.js
-
-Editing is done using a skill. It follows the [Agent Skills](https://agentskills.io) standard and is compatible with opencode, Claude Code, and Codex.
+This repo contains a knowledge base template (clone it, edit `.kb/`, ship) and the `symbolic-kb` skill in `.claude/skills/symbolic-kb/`, which includes both instructions for maintaining the knowledge base and the symbolic reasoning engine.
 
 ## Typical use on unstructured source data
 
