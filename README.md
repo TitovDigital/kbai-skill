@@ -19,7 +19,21 @@ In an opencode, Claude Code, or Codex session in this repo, ask:
 
 > Here's a contract: "Acme LLC and Beta Inc. agree to a 12-month non-compete. Signed by A. Smith for Acme and J. Doe for Beta." Is it valid according to the 'symbolic-kb' skill?
 
-The agent extracts `contract.hasNonCompete`, `contract.signedByPartyA`, `contract.signedByPartyB` from the text, runs the inference, and answers with the reasoning tree — the same one the command-line example below prints. If a fact isn't in the document (e.g., one signature is missing), the engine stops at `FACT_NEEDED` for that fact and the agent says so rather than guessing.
+The agent extracts `contract.hasNonCompete`, `contract.signedByPartyA`, `contract.signedByPartyB` from the text, runs the inference, and answers with the reasoning tree — the same one the command-line example below prints. If a fact isn't in the document (e.g., one signature is missing), the engine stops at `FACT_NEEDED` for that fact and the agent says so rather than guessing:
+
+> ● Skill(symbolic-kb)
+> Successfully loaded skill
+> 
+>   Searched for 1 pattern, ran 3 shell commands
+> 
+> Yes — valid, according to the contract.isValid rule.
+> 
+> Reasoning trace:
+> - contract.hasNonCompete = true (12-month non-compete clause is present)
+> - contract.signedByPartyA = true (A. Smith signed for Acme)
+> - contract.signedByPartyB = true (J. Doe signed for Beta)
+> - → contract.isSignedByBothParties = true (both signatures present)
+> - → contract.isValid = true (has non-compete AND signed by both parties)
 
 For a document on disk, point the agent at the file (attach it or give its path) and ask the same question.
 
