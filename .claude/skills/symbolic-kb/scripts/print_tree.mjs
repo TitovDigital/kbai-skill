@@ -3,7 +3,8 @@
  * print_tree.mjs — Pretty-prints the reasoning trace from run_inference.mjs's JSON output.
  *
  * @author Pavel Titov
- * @copyright 2024-2026 Pavel Titov
+ * @copyright 2024-2026 Able Digital Ltd
+ * @license Business Source License 1.1 (see LICENSE)
  *
  * Reads the JSON result of run_inference.mjs from stdin ({ stopReason, result, facts, log })
  * and renders the log as a human-readable, sequential explanation of the inference.

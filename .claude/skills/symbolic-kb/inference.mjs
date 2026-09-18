@@ -2,7 +2,8 @@
  * Inference engine — forward-chaining rule evaluator.
  *
  * @author Pavel Titov
- * @copyright 2024-2026 Pavel Titov
+ * @copyright 2024-2026 Able Digital Ltd
+ * @license Business Source License 1.1 (see LICENSE)
  *
  * Adapted from lib/public_js/inference.js in the KBAI codebase.
  *

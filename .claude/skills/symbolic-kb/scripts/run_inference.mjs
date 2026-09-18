@@ -3,7 +3,8 @@
  * run_inference.mjs — Runs the knowledge base locally.
  *
  * @author Pavel Titov
- * @copyright 2024-2026 Pavel Titov
+ * @copyright 2024-2026 Able Digital Ltd
+ * @license Business Source License 1.1 (see LICENSE)
  *
  * Replaces the HTTP call to AWS Lambda in KBAI's chat_controller.rb
  * (run_kbai_inference, chat_controller.rb:368-412). Instead of POSTing to a

@@ -1,8 +1,10 @@
 # kbai-skill
 
-A self-contained template for building a **deterministic model** with structured reasoning, designed to run as an [Agent Skills](https://agentskills.io) standard skill (opencode, Claude Code, Codex). Rules are JavaScript functions executed by a forward-chaining inference engine locally with Node.js — no LLM is used at inference time. The agent orchestrates a feedback loop between LLM fact extraction and deterministic rule evaluation, refusing to guess when facts are ambiguous.
+A self-contained template for building a **deterministic model** with structured reasoning. Rules are JavaScript functions executed by a forward-chaining symboling inference engine locally with Node.js — no LLM is used at inference time.
 
-This repo contains a model knowledge base template (clone it, use the skill to modify `.kb/`, ship) and the `symbolic-kb` skill in `.claude/skills/symbolic-kb/`, which includes both instructions for maintaining the knowledge base and the symbolic reasoning engine.
+To interact with unstructured inputs, an agent can be used to orchestrate a feedback loop between LLM fact extraction and deterministic rule evaluation, refusing to guess when facts are ambiguous.
+
+This repo contains a model knowledge base template (clone it, use the skill to modify `.kb/`, ship) and the `symbolic-kb` skill in `.claude/skills/symbolic-kb/`, which includes instructions for maintaining the knowledge base and the symbolic reasoning engine. This skill is designed to run as an [Agent Skills](https://agentskills.io) standard skill (opencode, Claude Code, Codex).
 
 ## Typical use on unstructured source data
 
@@ -166,5 +168,3 @@ There is no compiled bundle and no build step. The KB is loaded at runtime: `loa
 ## Going further
 
 The full agent workflows — natural-language-to-logic rule authoring, the fact-extraction feedback loop, and single-rule evaluation — live in `.claude/skills/symbolic-kb/SKILL.md`. Read that when you're ready to drive the KB from a conversation rather than the CLI.
-
-<!-- Copyright 2024-2026 Pavel Titov -->

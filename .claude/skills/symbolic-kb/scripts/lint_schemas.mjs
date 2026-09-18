@@ -3,7 +3,8 @@
  * lint_schemas.mjs — Reconciles enum conflicts across rule dependency schemas.
  *
  * @author Pavel Titov
- * @copyright 2024-2026 Pavel Titov
+ * @copyright 2024-2026 Able Digital Ltd
+ * @license Business Source License 1.1 (see LICENSE)
  *
  * Replaces the SchemaLintable concern (schema_lintable.rb) from the KBAI
  * Rails app. When multiple rules reference the same string fact with different

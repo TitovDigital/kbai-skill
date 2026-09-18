@@ -324,5 +324,5 @@ When the user wants to test a specific rule with known facts:
      | node .claude/skills/symbolic-kb/scripts/print_tree.mjs
    ```
 
-<!-- Copyright 2024-2026 Pavel Titov -->
+<!-- Copyright 2024-2026 Able Digital Ltd. Licensed under the Business Source License 1.1 (see LICENSE). -->
 

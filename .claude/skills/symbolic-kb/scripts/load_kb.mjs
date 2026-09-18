@@ -2,7 +2,8 @@
  * load_kb.mjs — Dynamic KB loader.
  *
  * @author Pavel Titov
- * @copyright 2024-2026 Pavel Titov
+ * @copyright 2024-2026 Able Digital Ltd
+ * @license Business Source License 1.1 (see LICENSE)
  *
  * Replaces compile_kb.mjs. Instead of concatenating rule files + engine into a
  * bundle, this reads the KB at runtime: it reads `manifest.json`, dynamically
