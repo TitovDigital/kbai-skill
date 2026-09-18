@@ -1,14 +1,14 @@
 # kbai-skill
 
-A self-contained template for building a **deterministic knowledge base** with symbolic reasoning, designed to run as an [Agent Skills](https://agentskills.io) standard skill (opencode, Claude Code, Codex). Rules are JavaScript functions executed by a forward-chaining inference engine locally with Node.js — no LLM is used at inference time. The agent orchestrates a feedback loop between LLM fact extraction and deterministic rule evaluation, refusing to guess when facts are ambiguous.
+A self-contained template for building a **deterministic model** with structured reasoning, designed to run as an [Agent Skills](https://agentskills.io) standard skill (opencode, Claude Code, Codex). Rules are JavaScript functions executed by a forward-chaining inference engine locally with Node.js — no LLM is used at inference time. The agent orchestrates a feedback loop between LLM fact extraction and deterministic rule evaluation, refusing to guess when facts are ambiguous.
 
-This repo contains a knowledge base template (clone it, edit `.kb/`, ship) and the `symbolic-kb` skill in `.claude/skills/symbolic-kb/`, which includes both instructions for maintaining the knowledge base and the symbolic reasoning engine.
+This repo contains a model knowledge base template (clone it, use the skill to modify `.kb/`, ship) and the `symbolic-kb` skill in `.claude/skills/symbolic-kb/`, which includes both instructions for maintaining the knowledge base and the symbolic reasoning engine.
 
 ## Typical use on unstructured source data
 
-In this case, symbolic reasoning code is responsible for making a decision, whereas LLM handles extraction of simple facts from the source unstructured data (a source document). The loop runs until the engine has everything it needs:
+A common practical example is where the deterministic code is responsible for making a decision, whereas LLM handles extraction of simple facts from the source unstructured data (a source document, a set of facts/state that need to be extracted from the text etc). The decision-making then runs until an answer can be determined:
 
-1. The agent reads `manifest.json`, picks the rule that answers your question, and extracts the facts it can see in the document.
+1. The agent picks the rule that answers your question, and extracts the facts it can see in the document/state.
 2. It runs the engine. If a fact is missing, the engine returns `FACT_NEEDED` with that fact's schema — never a guess.
 3. The agent goes back to the document for that specific fact (using the schema's type and description), adds it, and re-runs.
 4. Repeat until `COMPLETED`, then the agent answers with the reasoning tree attached.
@@ -87,6 +87,14 @@ echo '{"fact":"contract.isValid","facts":{"contract.hasNonCompete":true,"contrac
 ```
 
 A `FACT_NEEDED` response is the engine refusing to guess — supply the missing fact and re-run, or have an agent extract it from your document (see the Quick start above).
+
+## Automatic learning
+
+Modern agents can use the skill to build entire reasoning knowledge base from a set of a few examples, reverse-engineering them into a decision-making model.
+
+For example:
+
+> Redo this knowledge base to implement logic behind writing the emails. Use relevant skill to remove all existing rules, analyse the following examples and write rules that would produce all information needed to write a welcome email from the inputs: [a set of emails and when they were written]
 
 ## Knowledge base layout
 
