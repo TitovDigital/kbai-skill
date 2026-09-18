@@ -90,11 +90,13 @@ A `FACT_NEEDED` response is the engine refusing to guess — supply the missing 
 
 ## Automatic learning
 
-Modern agents can use the skill to build entire reasoning knowledge base from a set of a few examples, reverse-engineering them into a decision-making model.
+Modern agents can use the skill to automatically *build entire reasoning knowledge base from a set of a few examples*, reverse-engineering them into a decision-making model.
 
 For example:
 
-> Redo this knowledge base to implement logic behind writing the emails. Use relevant skill to remove all existing rules, analyse the following examples and write rules that would produce all information needed to write a welcome email from the inputs: [a set of emails and when they were written]
+> Redo this knowledge base to implement logic behind writing the emails. Use relevant skill to remove all existing rules, analyse the following examples and write rules that would produce all information needed to write a welcome email from the inputs: [a set of emails and when each email was sent]
+
+The agent would then analyze a few email examples provided and reverse-engineer how each was written and how decisions about varying the examples were made based on the input variables, producing a deterministic model capable of making decisions and writing an email brief from those input variables.
 
 ## Knowledge base layout
 
