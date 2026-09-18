@@ -39,23 +39,7 @@ The agent extracts `contract.hasNonCompete`, `contract.signedByPartyA`, `contrac
 
 For a document on disk, point the agent at the file (attach it or give its path) and ask the same question.
 
-## Editing the knowledge base with an agent
-
-To add or change rules, describe them in natural language; the agent translates your description to first-order logic, writes the rule file, updates `manifest.json` (question, condition, dependencies), and lints the schemas.
-
-Usage example in this repo:
-
-> Show me the knowledge base in this project
-
-(Prints explanation of the existing rules in the knowledge base)
-
-> Add a rule: a contract is binding if it is valid and has been filed with the county.
-
-The agent updates the knowledge base with the additional rule.
-
-Re-run the query example to see how the updated tree executes.
-
-## Use without an agent
+### Inference without an agent
 
 For structured inputs, the same engine can be called programmatically without an LLM or an agent:
 
@@ -90,7 +74,23 @@ echo '{"fact":"contract.isValid","facts":{"contract.hasNonCompete":true,"contrac
 
 A `FACT_NEEDED` response is the engine refusing to guess — supply the missing fact and re-run, or have an agent extract it from your document (see the Quick start above).
 
-## Automatic learning
+## Editing the knowledge base with an agent
+
+To add or change rules, describe them in natural language; the agent translates your description to first-order logic, writes the rule file, updates `manifest.json` (question, condition, dependencies), and lints the schemas.
+
+Usage example in this repo:
+
+> Show me the knowledge base in this project
+
+(Prints explanation of the existing rules in the knowledge base)
+
+> Add a rule: a contract is binding if it is valid and has been filed with the county.
+
+The agent updates the knowledge base with the additional rule.
+
+Re-run the query example to see how the updated tree executes.
+
+### Automatic learning
 
 Modern agents can use the skill to automatically *build entire reasoning knowledge base from a set of a few examples*, reverse-engineering them into a decision-making model.
 
@@ -100,7 +100,7 @@ For example:
 
 The agent would then analyze a few email examples provided and reverse-engineer how each was written and how decisions about varying the examples were made based on the input variables, producing a deterministic model capable of making decisions and writing an email brief from those input variables.
 
-## Knowledge base layout
+## Knowledge base layout reference
 
 ```
 .kb/
@@ -112,7 +112,7 @@ The agent would then analyze a few email examples provided and reverse-engineer 
 
 Override the KB directory with `--kb-dir <path>` on any script, or set it in `AGENTS.md`.
 
-## Writing a rule manually
+### Writing a rule manually
 
 Copy `templates/rule_template.mjs` into `.kb/rules/<subject.predicate>.mjs`. The default-exported function takes an `infer` callback and returns a value. Use only `infer` and standard JS — no external packages.
 
@@ -147,7 +147,7 @@ Then register the rule in `manifest.json`:
 
 `question` is what the rule answers; `condition` is the plain-English logic; `dependencies` is a JSON schema of facts the rule needs (used by the engine to ask for missing facts).
 
-## Maintaining the KB
+### Maintaining the KB
 
 ```bash
 # Reconcile enum conflicts across rules that reference the same string fact
@@ -156,7 +156,7 @@ node .claude/skills/symbolic-kb/scripts/lint_schemas.mjs --kb-dir .kb
 
 Rules are auto-discovered at runtime — no build step. Run `lint_schemas.mjs` after manifest enum changes.
 
-## Deploying
+### Deploying
 
 There is no compiled bundle and no build step. The KB is loaded at runtime: `load_kb.mjs` reads `manifest.json`, dynamically imports `rules/*.mjs`, and wires a `handler` via `createHandler` from `inference.mjs`. To deploy, ship `.kb/` (`rules/*.mjs` + `manifest.json`) alongside `inference.mjs` and `load_kb.mjs`:
 
