@@ -39,7 +39,7 @@ The agent extracts `contract.hasNonCompete`, `contract.signedByPartyA`, `contrac
 
 For a document on disk, point the agent at the file (attach it or give its path) and ask the same question.
 
-### Inference without an agent
+## Inference without an agent
 
 For structured inputs, the same engine can be called programmatically without an LLM or an agent:
 
