@@ -1,19 +1,26 @@
 # kbai-skill
 
-A self-contained template for building a **deterministic model** with structured reasoning. Rules are JavaScript functions executed by a forward-chaining symboling inference engine locally with Node.js — no LLM is used at inference time.
+A self-contained template for building a **symbolic reasoning engine** — rules are JavaScript functions executed by a forward-chaining symbolic inference engine locally with Node.js.
+
+It's useful when:
+* you need **auditable, repeatable decisions** over messy inputs — cases where a pure LLM is too unreliable to trust with the decision itself,
+* the decision workflow is such that **can be written down by a domain expert as a policy**,
+* decision logic follows **tree-like structure (if-then), possibly with unclear dependencies**, rather than a linear process.
 
 To interact with unstructured inputs, an agent can be used to orchestrate a feedback loop between LLM fact extraction and deterministic rule evaluation, refusing to guess when facts are ambiguous.
 
 This repo contains a model knowledge base template (clone it, use the skill to modify `.kb/`, ship) and the `symbolic-kb` skill in `.claude/skills/symbolic-kb/`, which includes instructions for maintaining the knowledge base and the symbolic reasoning engine. This skill is designed to run as an [Agent Skills](https://agentskills.io) standard skill (opencode, Claude Code, Codex).
 
-## Typical use on unstructured source data
+## Typical workflow for unstructured source data
 
-A common practical example is where the deterministic code is responsible for making a decision, whereas LLM handles extraction of simple facts from the source unstructured data (a source document, a set of facts/state that need to be extracted from the text etc). The decision-making then runs until an answer can be determined:
+A common practical example is a **neuro-symbolic architecture**, where the deterministic code is responsible for making a decision, whereas an LLM (or a specialised model) handles extraction of simple facts from the source unstructured data (a source document, a set of facts/state that need to be extracted from the text etc). The decision-making then runs until an answer can be determined:
 
 1. The agent picks the rule that answers your question, and extracts the facts it can see in the document/state.
 2. It runs the engine. If a fact is missing, the engine returns `FACT_NEEDED` with that fact's schema — never a guess.
 3. The agent goes back to the document for that specific fact (using the schema's type and description), adds it, and re-runs.
 4. Repeat until `COMPLETED`, then the agent answers with the reasoning tree attached.
+
+In many instances this can be optimized by determining all facts speculatively before running the rule engine.
 
 ### Example
 
@@ -92,7 +99,7 @@ Re-run the query example to see how the updated tree executes.
 
 ### Automatic learning
 
-Modern agents can use the skill to automatically *build entire reasoning knowledge base from a set of a few examples*, reverse-engineering them into a decision-making model.
+Modern agents can use the skill to automatically **build entire reasoning knowledge base from a set of a few examples**, reverse-engineering them into a decision-making model.
 
 For example:
 
